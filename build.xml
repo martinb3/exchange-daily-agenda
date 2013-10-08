@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Jul 27, 2011 06:09:00 PM                                                        
+
+ 	 See org.mbs3.java.exchange.ExchangeDailyAgenda for a full description.    
+                   
+     martin                                                                
+     ====================================================================== -->
+<project name="project" default="compile">
+	
+	<path id="master-classpath">
+	  <fileset dir="lib">
+	    <include name="*.jar"/>
+	  </fileset>
+
+	  <pathelement path="bin"/>
+	</path>
+
+	
+    <target name="jar" depends="clean, compile" description="description">
+    	<mkdir dir="target"/>
+    	
+    	<jar destfile="target/src.jar" basedir="src"/>
+    	
+    	<jar destfile="target/exchange_agenda.jar" basedir="bin">
+            <manifest>
+              <attribute name="Main-Class" value="org.mbs3.java.exchange.ExchangeDailyAgenda" />
+            </manifest>
+    		
+    		<zipfileset src="lib/commons-cli-1.2.jar"/>
+    		<zipfileset src="lib/commons-codec-1.4.jar"/>
+    		<zipfileset src="lib/commons-httpclient-3.1.jar"/>
+    		<zipfileset src="lib/commons-logging-1.1.1.jar"/>
+    		<zipfileset src="lib/commons-logging-adapters-1.1.1.jar"/>
+    		<zipfileset src="lib/commons-logging-api-1.1.1.jar"/>
+    		<zipfileset src="lib/EWSAPI-1.1.4.jar"/>
+    		<zipfileset src="lib/jcifs-1.3.16.jar"/>
+    		
+    		<fileset dir="lib"/>
+			<fileset file="target/src.jar"/>
+    		<fileset file="build.xml"/>
+    	</jar>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="src" destdir="bin">
+        	<classpath refid="master-classpath"/>
+    	</javac>
+    </target>
+
+    <target name="clean">
+    	<delete dir="bin"/>
+    	<delete dir="target"/>
+    </target>
+	
+	<target name="init">
+		<mkdir dir="bin"/>
+	</target>
+</project>
